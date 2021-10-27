@@ -17,7 +17,11 @@ public class Contenedor {
         return dato;
     }
     public synchronized boolean datoDisponible(){
-
+        boolean dato = true;
+        if(!contenedorVacio()){
+            dato=false;
+        }
+        return dato;
     }
 
     // devuelve true si ya ha alcanzado el max (10)

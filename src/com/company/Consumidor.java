@@ -2,9 +2,11 @@ package com.company;
 
 public class Consumidor implements Runnable{
     final Contenedor datos;
+    String nombre;
 
-    public Consumidor(Contenedor datos) {
+    public Consumidor(Contenedor datos, String nombre) {
         this.datos = datos;
+        this.nombre=nombre;
     }
 
     @Override
@@ -25,11 +27,11 @@ public class Consumidor implements Runnable{
 
     }
 
-    private int consumirDato(int[] dato) {
-        int resultado= 0;
+    private void consumirDato(int[] dato) {
+        int resultado=0;
         for (int i = 0; i < dato.length; i++) {
             resultado +=dato[i];
         }
-        return resultado;
+        System.out.println(resultado);
     }
 }
