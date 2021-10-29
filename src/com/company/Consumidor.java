@@ -2,26 +2,30 @@ package com.company;
 
 public class Consumidor implements Runnable{
     final Contenedor datos;
-    String nombre;
 
-    public Consumidor(Contenedor datos, String nombre) {
+
+    public Consumidor(Contenedor datos) {
         this.datos = datos;
-        this.nombre=nombre;
+
     }
 
     @Override
     public void run() {
-        while (true){
+        int[]dato = null;
+        while (!Thread.currentThread().isInterrupted()){
             synchronized (datos){
-                while(datos.contenedorVacio()){
-                    try{
-                        datos.wait();
-                    }catch (InterruptedException e){
 
+                    while(datos.contenedorVacio()&&!Thread.currentThread().isInterrupted()) {
+                        try {
+                            datos.wait();
+                        } catch (InterruptedException e) {
+
+                        }
                     }
-                }
-                consumirDato(datos.get());
-                datos.notifyAll();
+                    if(!Thread.currentThread().isInterrupted())
+                    dato = datos.get();
+                    datos.notifyAll();
+
             }
         }
 

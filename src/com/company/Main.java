@@ -1,18 +1,26 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
+    public static int NUMERO_PRODUCTORES= 5;
+    public static int NUMERO_CONSUMIDORES= 5;
 
     public static void main(String[] args) {
 	// write your code here
+
         Contenedor almacen = new Contenedor();
-        Thread hprod1 = new Thread(new Productor(almacen, "P1"));
-        Thread hprod2 = new Thread(new Productor(almacen, "P2"));
-        Thread hprod3 = new Thread(new Productor(almacen, "P3"));
-        Thread hprod4 = new Thread(new Productor(almacen, "P4"));
-        Thread hcons1 = new Thread(new Consumidor(almacen, "C1"));
-        Thread hcons2 = new Thread(new Consumidor(almacen, "C2"));
-        Thread hcons3 = new Thread(new Consumidor(almacen, "C3"));
-        Thread hcons4 = new Thread(new Consumidor(almacen, "C4"));
+        List <Thread> productores = new ArrayList<>();
+        List <Thread> consumidores = new ArrayList<>();
+        for (int i = 0; i < NUMERO_PRODUCTORES ; i++) {
+            productores.add(new Thread(new Productor(almacen)));
+        }
+
+        for (int i = 0; i < NUMERO_PRODUCTORES ; i++) {
+            consumidores.add(new Thread(new Consumidor(almacen)));
+        }
+
         hprod1.start();
         hprod2.start();
         hprod3.start();

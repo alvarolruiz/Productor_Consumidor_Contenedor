@@ -1,12 +1,13 @@
 package com.company;
 
 public class Productor implements Runnable{
+    public final int NUMERO_DATOS =100;
+    public final int NUMERO_MÁXIMO =100;
     final Contenedor datos;
-    String nombre;
 
-    public Productor(Contenedor datos, String nombre) {
+
+    public Productor(Contenedor datos) {
         this.datos = datos;
-        this.nombre=nombre;
     }
 
     @Override
@@ -21,12 +22,13 @@ public class Productor implements Runnable{
         synchronized (datos){
             //Comprueba si se ha producido el numero maximo de recursos necesarios
             // Si no es el caso el hilo produce otro elemento y lo posiciona en el contenedor
+
             while(datos.maxAlcanzado()){
                 try{
                     // Espera inactiva, no  consume recursos del procesador
                     datos.wait();
                 }catch(InterruptedException e){
-                    e.printStackTrace();
+                    System.out.println("*****INTERRUMPIDO*****" + this.nombre);
                 }
             }
             datos.put(dato);
@@ -37,9 +39,9 @@ public class Productor implements Runnable{
 
     private int [] producirDato() {
         int dato [];
-        dato = new  int [100];
+        dato = new  int [NUMERO_DATOS];
         for (int i = 0; i < dato.length; i++) {
-            dato[i] = (int) (Math.random() * 100001);
+            dato[i] = (int) (Math.random() * NUMERO_MÁXIMO+1);
         }
         return dato;
     }
